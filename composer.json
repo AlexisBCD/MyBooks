@@ -1,0 +1,22 @@
+{
+    "name": "acgroup/my-books",
+    "description": "mini site web permettant la gestion de livres",
+    "autoload": {
+        "psr-4": {
+            "Acgroup\\MyBooks\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AlexisBCD",
+            "email": "alexisuphf@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/routing": "^7.0",
+        "symfony/twig-bundle": "^7.0",
+        "symfony/validator": "^7.0",
+        "doctrine/orm": "^2.17",
+        "symfony/cache": "^7.0"
+    }
+}
