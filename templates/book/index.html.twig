@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index Book{% endblock %}
+
+{% block body %}
+    <h1>Index Book</h1>
+
+    <h2>NB Book - {{ books|length }}</h2>
+
+    <a href="/book/new" class="btn btn-primary">New book</a>
+
+    <div class="table-responsive">
+        {% if books is not empty %}
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Editeur</th>
+                        <th class="col-md-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <td>{{ book.titre }}</td>
+                            <td>{{ book.auteur }}</td>
+                            <td>{{ book.editeur }}</td>
+                            <td class="col-md-2">
+                                <a href="/book/{{ book.id }}" class="btn btn-info">View</a>
+                                <a href="/book/{{ book.id }}/edit" class="btn btn-warning">Edit</a>
+                                <a href="/book/{{ book.id }}/delete" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="alert alert-info"><b>There are no books</b></p>
+        {% endif %}
+    </div>
+{% endblock %}

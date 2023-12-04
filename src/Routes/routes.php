@@ -8,5 +8,6 @@ $routes = new RouteCollection();
 $routes->add('home', new Route('/'));
 $routes->add('hello', new Route('/hello/{name}', ['name' => 'World']));
 $routes->add('bookNew', new Route('/book/new'));
+$routes->add('bookIndex', new Route('/book'));
 
 return $routes;
