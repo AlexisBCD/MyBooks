@@ -2,8 +2,8 @@
     "name": "acgroup/my-books",
     "description": "mini site web permettant la gestion de livres",
     "autoload": {
-        "psr-4": {
-            "Acgroup\\MyBooks\\": "src/"
+        "psr-0": {
+            "": "src/"
         }
     },
     "authors": [
