@@ -19,9 +19,17 @@ class Livre
    #[ORM\Column(type : 'string')]
    #[Assert\NotBlank]
     private String $titre;
+    #[ORM\Column(type : 'string')]
+    #[Assert\NotBlank]
     private String $auteur;
+    #[ORM\Column(type : 'date')]
+    #[Assert\NotBlank]
     private Date $anneePublication;
+    #[ORM\Column(type : 'string')]
+    #[Assert\NotBlank]
     private String $editeur;
+    #[ORM\Column(type : 'string')]
+    #[Assert\NotBlank]
     private String $ISBN;
 
     public function __construct(int $id, String $titre, String $auteur, Date $anneePublication, String $editeur, String $ISBN ){
