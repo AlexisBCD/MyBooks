@@ -21,11 +21,10 @@ $arrayViolations = [];
 
 if (Request::METHOD_POST == $request->getMethod()) {
     $book = (new Book())
-        ->setId($request->get('id'))
-        ->setTitre($request->get('titre'))
-        ->setAuteur($request->get('auteur'))
-        ->setAnneePublication($request->get('anneePublication'))
-        ->setEditeur($request->get('editeur'))
+        ->setTitre($request->get('title'))
+        ->setAuteur($request->get('author'))
+        ->setAnneePublication(new \DateTime($request->get('yearOfPublication')))
+        ->setEditeur($request->get('editor'))
         ->setISBN($request->get('ISBN'));
 
     $violations = $validator->validate($book);

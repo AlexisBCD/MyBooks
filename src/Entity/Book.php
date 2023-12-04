@@ -2,12 +2,9 @@
 
 namespace Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
 use Repository\BookRepository;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\Date;
-
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ORM\Table(name: 'livres')]
@@ -17,25 +14,30 @@ class Book
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue]
     private int|null $id = null;
+
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
-    private String $titre;
+    private string $titre;
+
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
-    private String $auteur;
+    private string $auteur;
+
     #[ORM\Column(type: 'date')]
     #[Assert\NotBlank]
-    private Date $anneePublication;
+    private \DateTime $anneePublication;
+
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
-    private String $editeur;
+    private string $editeur;
+
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
-    private String $ISBN;
+    private string $ISBN;
 
     /*
- * @return int|null
- */
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -69,12 +71,12 @@ class Book
         return $this;
     }
 
-    public function getAnneePublication(): ?Date
+    public function getAnneePublication(): ?\DateTime
     {
         return $this->anneePublication;
     }
 
-    public function setAnneePublication(string $anneePublication): Book
+    public function setAnneePublication(\DateTime $anneePublication): Book
     {
         $this->anneePublication = $anneePublication;
         return $this;
