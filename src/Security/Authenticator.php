@@ -43,4 +43,10 @@ class Authenticator
             return null;
         }
     }
+
+    public static function urlNotLogged()
+    {
+        return '/login';
+    }
 }
+//return new RedirectResponse('/');

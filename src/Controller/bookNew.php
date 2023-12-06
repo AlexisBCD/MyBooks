@@ -18,33 +18,30 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 Authenticator::init();
 
-$studentRepository = $entityManager->getRepository(Book::class);
-
-$arrayViolations = [];
-
-if (Request::METHOD_POST == $request->getMethod()) {
-    $book = (new Book())
-        ->setTitre($request->get('title'))
-        ->setAuteur($request->get('author'))
-        ->setAnneePublication(new \DateTime($request->get('yearOfPublication')))
-        ->setEditeur($request->get('editor'))
-        ->setISBN($request->get('ISBN'));
-
-    $violations = $validator->validate($book);
-
-    if ($violations->count() == 0) {
-        $entityManager->persist($book);
-        $entityManager->flush();
-
-        return new RedirectResponse('/book');
-    }
-    foreach ($violations as $violation) {
-        $arrayViolations[$violation->getPropertyPath()][] = $violation->getMessage();
-    }
-}
-
 if (Authenticator::is_authenticated()) {
+    $studentRepository = $entityManager->getRepository(Book::class);
+    $arrayViolations = [];
+    if (Request::METHOD_POST == $request->getMethod()) {
+        $book = (new Book())
+            ->setTitre($request->get('title'))
+            ->setAuteur($request->get('author'))
+            ->setAnneePublication(new \DateTime($request->get('yearOfPublication')))
+            ->setEditeur($request->get('editor'))
+            ->setISBN($request->get('ISBN'));
+
+        $violations = $validator->validate($book);
+
+        if ($violations->count() == 0) {
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+            return new RedirectResponse('/book');
+        }
+        foreach ($violations as $violation) {
+            $arrayViolations[$violation->getPropertyPath()][] = $violation->getMessage();
+        }
+    }
     return new Response($twig->render('book/new.html.twig', ['violations' => $arrayViolations]));
 } else {
-    return new RedirectResponse('/');
+    return new RedirectResponse(Authenticator::urlNotLogged());
 }

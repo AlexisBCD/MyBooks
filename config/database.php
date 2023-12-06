@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 
 $config = ORMSetup::createAttributeMetadataConfiguration(
-    paths: array(dirname(__DIR__) . "/src"),
+    paths: array(dirname(__DIR__) . "/src/Entity"),
     isDevMode: true,
 );
 

@@ -8,18 +8,14 @@
  */
 
 
-use Entity\User;
 use Security\Authenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 
 Authenticator::init();
 
-if (Authenticator::is_authenticated()) {
-    if ($request->isMethod('POST')) {
+if (!Authenticator::is_authenticated()) {
+    if ($request != null && $request->isMethod('POST')) {
         $username = $request->request->get('_username');
         $password = $request->request->get('_password');
 
@@ -38,4 +34,6 @@ if (Authenticator::is_authenticated()) {
             'error'         => null,
         ]));
     }
+} else {
+    return new RedirectResponse('/book');
 }
