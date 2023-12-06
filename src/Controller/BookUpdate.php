@@ -43,7 +43,7 @@ if (Authenticator::is_authenticated()) {
             $arrayViolations[$violation->getPropertyPath()][] = $violation->getMessage();
         }
     }
-    return new Response($twig->render('book/_form.html.twig', ['book' => $book, 'violations' => $arrayViolations]));
+    return new Response($twig->render('book/update.html.twig', ['book' => $book, 'violations' => $arrayViolations]));
 } else {
     return new RedirectResponse(Authenticator::urlNotLogged());
 }
