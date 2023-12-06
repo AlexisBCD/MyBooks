@@ -13,4 +13,8 @@ $routes->add('bookDelete',new Route('/book/{id}/delete',[],['id' =>('\d')]));
 $routes->add('bookUpdate',new Route('/book/{id}/edit',[],['id' =>('\d')]));
 $routes->add('bookView',new Route('/book/{id}',[],['id' =>('\d')]));
 
+
+$routes->add('bookIndex',new Route('/editor'));
+$routes->add('editorNew',new Route('/editor/new'));
+
 return $routes;

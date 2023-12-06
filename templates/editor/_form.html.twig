@@ -1,0 +1,31 @@
+<form method="post">
+    <div class="mb-3">
+        <label for="title" class="form-label">Nom de la maison d'édition : </label>
+        <input type="text" id="nom" name="nom" placeholder="Exemple : Les Edition Sabine Wespieser." required class="form-control {{ violations.name is not defined ? '' : 'is-invalid' }}" value="{{ editor.name }}">
+        {% for violation in violations.name %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email de contact : </label>
+        <input type="text" id="email" name="email" placeholder="Exemple : com@uphf.fr" required class="form-control {{ violations.name is not defined ? '' : 'is-invalid' }}" value="{{ editor.name }}">
+        {% for violation in violations.name %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="tel" class="form-label">Numéro de téléphone : </label>
+        <input type="text" id="tel" name="tel" placeholder="Exemple : +33615869045" required class="form-control {{ violations.name is not defined ? '' : 'is-invalid' }}" value="{{ editor.name }}">
+        {% for violation in violations.name %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="adresse" class="form-label">Adresse : </label>
+        <input type="text" id="adresse" name="adresse" placeholder="Exemple : 5 rue du Moulinel" required class="form-control {{ violations.name is not defined ? '' : 'is-invalid' }}" value="{{ student.name }}">
+        {% for violation in violations.name %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index Editor{% endblock %}
+
+{% block body %}
+    <h1>Les maisons d'éditions publiant dans notre librairie</h1>
+
+    <h2>NB EDITOR - {{ editors|length }}</h2>
+
+    <a href="/editor/new" class="btn btn-primary">New book</a>
+
+    <div class="table-responsive">
+        {% if editors is not empty %}
+            <table id="editors" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Nom de la maison</th>
+                    <th>Email</th>
+                    <th>Tel</th>
+                    <th>Adresse </th>
+                    <th class="col-md-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for editor in editors %}
+                    <tr>
+                        <td>{{ editor.nom }}</td>
+                        <td>{{ editor.email }}</td>
+                        <td>{{ editor.tel }}</td>
+                        <td>{{ editor.adresse }}</td>
+                        <td class="col-md-2">
+                            <a href="/editor/{{ editor.id }}" class="btn btn-info">View</a>
+                            <a href="/editor/{{ editor.id }}/edit" class="btn btn-warning">Edit</a>
+                            <a href="/editor/{{ editor.id }}/delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="alert alert-info"><b>Aucune maison d'édition n'a été renseigné</b></p>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-datatables@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new DataTable('#editors', {
+                searchable: true,
+                sortable: true, // Vous pouvez activer la fonction de tri si nécessaire
+                // Autres options de configuration...
+            });
+        });
+    </script>
+{% endblock %}
