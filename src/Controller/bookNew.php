@@ -9,11 +9,14 @@
  */
 
 use Doctrine\ORM\EntityManager;
+use Security\Authenticator;
 use Entity\Book;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+Authenticator::init();
 
 $studentRepository = $entityManager->getRepository(Book::class);
 
@@ -40,4 +43,8 @@ if (Request::METHOD_POST == $request->getMethod()) {
     }
 }
 
-return new Response($twig->render('book/new.html.twig', ['violations' => $arrayViolations]));
+if (Authenticator::is_authenticated()) {
+    return new Response($twig->render('book/new.html.twig', ['violations' => $arrayViolations]));
+} else {
+    return new RedirectResponse('/');
+}
