@@ -1,15 +1,15 @@
 <?php
 
-
 /**
  * @var Twig\Environment $twig
  * @var Doctrine\ORM\EntityManager $entityManager
+ * @var int $id
  */
 
 use Entity\Editor;
 use Symfony\Component\HttpFoundation\Response;
 
 $editorRepository = $entityManager->getRepository(Editor::class);
-$editors = $editorRepository->findAll();
+$editor = $editorRepository->find($id);
 
-return new Response($twig->render('editor/index.html.twig', ['editors' => $editors]));
+return new Response($twig->render('editor/show.html.twig', ['editor' => $editor]));

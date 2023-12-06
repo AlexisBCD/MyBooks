@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Informations de l'Éditeur</h1>
+
+                        <div class="mb-3">
+                            <strong><label for="nom" class="form-label">Nom de la maison d'édition :</label></strong>
+                            <p class="form-control-plaintext">{{ editor.nom }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <strong><label for="email" class="form-label">Email de contact :</label></strong>
+                            <p class="form-control-plaintext">{{ editor.email }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <strong><label for="tel" class="form-label">Numéro de téléphone :</label></strong>
+                            <p class="form-control-plaintext">{{ editor.tel }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <strong><label for="adresse" class="form-label">Adresse :</label></strong>
+                            <p class="form-control-plaintext">{{ editor.adresse }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

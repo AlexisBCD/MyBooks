@@ -14,5 +14,7 @@ $routes->add('bookView', new Route('/book/{id}', [], ['id' => ('\d')]));
 $routes->add('login', new Route('/login'));
 $routes->add('editorIndex', new Route('/editor'));
 $routes->add('editorNew', new Route('/editor/new'));
+$routes->add('editorView', new Route('/editor/{id}', [], ['id' => ('\d')]));
+$routes->add('editorDelete', new Route('/editor/{id}/delete', [], ['id' => ('\d')]));
 
 return $routes;

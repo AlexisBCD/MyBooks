@@ -27,17 +27,15 @@ class Book
     #[Assert\NotBlank]
     private \DateTime $anneePublication;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\ManyToOne(targetEntity: Editor::class)]
+    #[ORM\JoinColumn(name: 'editor_id', referencedColumnName: 'id')]
     #[Assert\NotBlank]
-    private string $editeur;
+    private Editor $editeur;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
     private string $ISBN;
 
-    /*
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
@@ -82,12 +80,12 @@ class Book
         return $this;
     }
 
-    public function getEditeur(): ?string
+    public function getEditeur(): ?Editor
     {
         return $this->editeur;
     }
 
-    public function setEditeur(string $editeur): Book
+    public function setEditeur(Editor $editeur): Book
     {
         $this->editeur = $editeur;
         return $this;

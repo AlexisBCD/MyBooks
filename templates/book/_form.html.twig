@@ -1,38 +1,48 @@
 <form method="post">
     <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
-        <input type="text" id="title" name="title" placeholder="Exemple : Le petit Nicolas" required class="form-control {{ violations.firstname is not defined ? '' : 'is-invalid' }}" value="{{ student.firstname }}">
-        {% for violation in violations.firstname %}
+        <input type="text" id="title" name="title" placeholder="Exemple : Le petit Nicolas" required class="form-control {{ violations.title is not defined ? '' : 'is-invalid' }}" value="{{ app.request.get('title') }}">
+        {% for violation in violations.title %}
             <div class="invalid-feedback">{{ violation }}</div>
         {% endfor %}
     </div>
+
     <div class="mb-3">
         <label for="author" class="form-label">Auteur</label>
-        <input type="text" id="author" name="author" placeholder="Exemple : René Goscinny" required class="form-control {{ violations.old is not defined ? '' : 'is-invalid' }}" value="{{ student.old }}">
-        {% for violation in violations.old %}
+        <input type="text" id="author" name="author" placeholder="Exemple : René Goscinny" required class="form-control {{ violations.author is not defined ? '' : 'is-invalid' }}" value="{{ app.request.get('author') }}">
+        {% for violation in violations.author %}
             <div class="invalid-feedback">{{ violation }}</div>
         {% endfor %}
     </div>
-        <div class="mb-3">
-        <label for="yearOfPublication" class="form-label">Annee de publication</label>
-        <input type="date" id="yearOfPublication" name="yearOfPublication" placeholder="Exemple : 23/09/2002" required class="form-control {{ violations.name is not defined ? '' : 'is-invalid' }}" value="{{ student.name }}">
-        {% for violation in violations.name %}
+
+    <div class="mb-3">
+        <label for="yearOfPublication" class="form-label">Année de publication</label>
+        <input type="date" id="yearOfPublication" name="yearOfPublication" required class="form-control {{ violations.yearOfPublication is not defined ? '' : 'is-invalid' }}" value="{{ app.request.get('yearOfPublication') }}">
+        {% for violation in violations.yearOfPublication %}
             <div class="invalid-feedback">{{ violation }}</div>
         {% endfor %}
     </div>
-        <div class="mb-3">
+
+    <div class="mb-3">
         <label for="editor" class="form-label">Editeur</label>
-        <input type="text" id="editor" name="editor" placeholder="Exemple : Maison d'édition Gallimard" required class="form-control {{ violations.name is not defined ? '' : 'is-invalid' }}" value="{{ student.name }}">
-        {% for violation in violations.name %}
+        <select id="editor" name="editor" required class="form-control {{ violations.editor is not defined ? '' : 'is-invalid' }}">
+            <option value="" disabled selected>Choisissez un éditeur</option>
+            {% for editor in editors %}
+                <option value="{{ editor.id }}">{{ editor.nom }}</option>
+            {% endfor %}
+        </select>
+        {% for violation in violations.editor %}
             <div class="invalid-feedback">{{ violation }}</div>
         {% endfor %}
     </div>
-        <div class="mb-3">
+
+    <div class="mb-3">
         <label for="ISBN" class="form-label">ISBN</label>
-        <input type="text" id="ISBN" name="ISBN" placeholder="Exemple : 978-2070364237" required class="form-control {{ violations.name is not defined ? '' : 'is-invalid' }}" value="{{ student.name }}">
-        {% for violation in violations.name %}
+        <input type="text" id="ISBN" name="ISBN" placeholder="Exemple : 978-2070364237" required class="form-control {{ violations.ISBN is not defined ? '' : 'is-invalid' }}" value="{{ app.request.get('ISBN') }}">
+        {% for violation in violations.ISBN %}
             <div class="invalid-feedback">{{ violation }}</div>
         {% endfor %}
     </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
