@@ -30,7 +30,6 @@ class Authenticator
 
     public static function authenticate($username, $password, $entityManager)
     {
-        self::init();
         $userRepository = $entityManager->getRepository(User::class);
         $user = $userRepository->findOneBy(['username' => $username]);
 
