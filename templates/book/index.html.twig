@@ -11,7 +11,7 @@
 
     <div class="table-responsive">
         {% if books is not empty %}
-            <table class="table table-bordered table-hover">
+            <table id="books" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Titre</th>
@@ -39,4 +39,15 @@
             <p class="alert alert-info"><b>There are no books</b></p>
         {% endif %}
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-datatables@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new DataTable('#books', {
+                searchable: true,
+                sortable: true, // Vous pouvez activer la fonction de tri si nécessaire
+                // Autres options de configuration...
+            });
+        });
+    </script>
 {% endblock %}

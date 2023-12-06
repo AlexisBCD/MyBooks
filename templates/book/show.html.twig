@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ book.titre }}</h1>
+
+    <p>
+       "Auteur du livre" : {{ book.auteur }}
+    </p>
+    <p>
+    <p>Published Date: {{ book.createdAt|date('Y-m-d H:i:s') }}</p>    
+{% endblock %}

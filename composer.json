@@ -2,7 +2,7 @@
     "name": "acgroup/my-books",
     "description": "mini site web permettant la gestion de livres",
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "": "src/"
         }
     },

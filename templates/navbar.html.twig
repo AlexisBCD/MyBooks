@@ -1,15 +1,49 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Home</a>
+
+        <!-- Add the button for the responsive menu -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/book">Livres</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/book/new">Nouveau Livre</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLivres" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Livres
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownLivres">
+                        <a class="dropdown-item" href="/book">Voir Livres</a>
+                        <a class="dropdown-item" href="/book/new">Nouveau Livre</a>
+                        <!-- Add more dropdown menu items if needed -->
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Custom script for hover-based dropdown
+    $(document).ready(function() {
+        // Enable Bootstrap tooltip for Livres link
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // Show the dropdown menu on hover
+        $('.nav-item.dropdown').hover(
+            function() {
+                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+            },
+            function() {
+                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+            }
+        );
+    });
+</script>
