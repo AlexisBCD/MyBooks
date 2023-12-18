@@ -8,6 +8,7 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Validator\Validation;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Security\Authenticator;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -25,6 +26,11 @@ $twig = new Environment($loader, [
     'cache' => false,
 ]);
 
+Authenticator::init();
+if (Authenticator::is_authenticated()) {
+    $twig->addGlobal('session', $_SESSION);
+}
+
 $entityManager = require_once dirname(__DIR__) . '/config/database.php';
 
 $validator = Validation::createValidatorBuilder()
@@ -32,9 +38,9 @@ $validator = Validation::createValidatorBuilder()
     ->getValidator();
 
 // try {
-     extract($urlMatcher->match($request->getPathInfo()));
+extract($urlMatcher->match($request->getPathInfo()));
 
-     $response = require dirname(__DIR__) . '/src/Controller/' . $_route . '.php';
+$response = require dirname(__DIR__) . '/src/Controller/' . $_route . '.php';
 // } catch (ResourceNotFoundException $exception) {
 //     $response = new Response('The requested page doesn\'t exist', Response::HTTP_NOT_FOUND);
 // } catch (Throwable $throwable) {

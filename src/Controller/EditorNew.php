@@ -12,7 +12,9 @@ use Entity\Editor;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Monolog\Logger;
+use Security\Authenticator;
+use Logger\DatabaseHandler;
 
 $editorRepository = $entityManager->getRepository(Editor::class);
 
@@ -30,6 +32,11 @@ if (Request::METHOD_POST == $request->getMethod()) {
     if ($violations->count() == 0) {
         $entityManager->persist($editor);
         $entityManager->flush();
+
+        $customHandler = new DatabaseHandler($entityManager);
+        $logger = new Logger('app');
+        $logger->pushHandler($customHandler);
+        $logger->info('Nouveau éditeur ajouté par ' . Authenticator::getUser() . ' : ' . $editor->getNom());
 
         return new RedirectResponse('/editor');
     }

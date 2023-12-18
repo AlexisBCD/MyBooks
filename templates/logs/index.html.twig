@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index Logs{% endblock %}
+
+{% block body %}
+    <h1>Historique des actions de MyBooks</h1>
+
+    <div class="table-responsive">
+        {% if logs is not empty %}
+            <table id="logs" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for log in logs %}
+                    <tr>
+                        <td>{{ log.id }}</td>
+                        <td>{{ log.message }}</td>
+                        <td>{{ log.createdAt|date('d-m-Y H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="alert alert-info"><b>Historique vide pour le moment</b></p>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-datatables@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new DataTable('#logs', {
+                searchable: true,
+                sortable: true,
+            });
+
+            var input = document.querySelector('.dataTable-input');
+            var selector = document.querySelector('.dataTable-selector');
+            if (input) {
+                input.classList.add('form-control');
+            }
+            if (selector) {
+                selector.classList.add('form-control');
+            }
+        });
+    </script>
+{% endblock %}

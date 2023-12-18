@@ -3,11 +3,9 @@
 {% block title %}Index Editor{% endblock %}
 
 {% block body %}
-    <h1>Les maisons d'éditions publiant dans notre librairie</h1>
+    <h1>Les maisons d'éditions dans la bibliothèque</h1>
 
-    <h2>NB EDITOR - {{ editors|length }}</h2>
-
-    <a href="/editor/new" class="btn btn-primary">New book</a>
+    <h2>{{ editors|length }} livres enregistrés</h2>
 
     <div class="table-responsive">
         {% if editors is not empty %}
@@ -45,11 +43,19 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-datatables@latest"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            new DataTable('#editors', {
+            new DataTable('#logs', {
                 searchable: true,
-                sortable: true, // Vous pouvez activer la fonction de tri si nécessaire
-                // Autres options de configuration...
+                sortable: true,
             });
+
+            var input = document.querySelector('.dataTable-input');
+            var selector = document.querySelector('.dataTable-selector');
+            if (input) {
+                input.classList.add('form-control');
+            }
+            if (selector) {
+                selector.classList.add('form-control');
+            }
         });
     </script>
 {% endblock %}

@@ -7,22 +7,22 @@
  * @var ValidatorInterface $validator
  */
 
-use Doctrine\ORM\EntityManager;
+
 use Security\Authenticator;
 use Entity\Book;
 use Entity\Editor;
+use Logger\DatabaseHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-
-Authenticator::init();
+use Monolog\Logger;
 
 if (Authenticator::is_authenticated()) {
     $editorRepository = $entityManager->getRepository(Editor::class);
     $editors = $editorRepository->findAll();
 
     $arrayViolations = [];
+    $logger = new Logger('app'); // Créez une instance de logger
 
     if (Request::METHOD_POST == $request->getMethod()) {
         // Modification pour utiliser l'ID de l'éditeur
@@ -41,6 +41,10 @@ if (Authenticator::is_authenticated()) {
         if ($violations->count() == 0) {
             $entityManager->persist($book);
             $entityManager->flush();
+
+            $customHandler = new DatabaseHandler($entityManager);
+            $logger->pushHandler($customHandler);
+            $logger->info('Nouveau livre ajouté par ' . Authenticator::getUser() . ' : ' . $book->getTitre());
 
             return new RedirectResponse('/book');
         }

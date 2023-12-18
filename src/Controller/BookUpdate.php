@@ -1,6 +1,8 @@
 <?php
 
+use Monolog\Logger;
 use Security\Authenticator;
+use Logger\DatabaseHandler;
 use Entity\Book;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +16,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * @var int $id
  * @var ValidatorInterface $validator
  **/
-
-Authenticator::init();
 
 $bookRepository = $entityManager->getRepository(Book::class);
 $book = $bookRepository->find($id);
@@ -36,6 +36,11 @@ if (Authenticator::is_authenticated()) {
         if ($violations->count() == 0) {
             $entityManager->persist($book);
             $entityManager->flush();
+
+            $customHandler = new DatabaseHandler($entityManager);
+            $logger = new Logger('app');
+            $logger->pushHandler($customHandler);
+            $logger->info('Livre mis à jour par ' . Authenticator::getUser() . ' : ' . $book->getTitre());
 
             return new RedirectResponse('/book');
         }

@@ -27,6 +27,7 @@ class Book
     #[Assert\NotBlank]
     private \DateTime $anneePublication;
 
+
     #[ORM\ManyToOne(targetEntity: Editor::class)]
     #[ORM\JoinColumn(name: 'editor_id', referencedColumnName: 'id')]
     #[Assert\NotBlank]

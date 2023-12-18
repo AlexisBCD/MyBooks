@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Index Book</h1>
 
-    <h2>NB Book - {{ books|length }}</h2>
+    <h2>{{ books|length }} livres enregistrés</h2>
 
     <div class="table-responsive">
         {% if books is not empty %}
@@ -24,7 +24,11 @@
                             <td>{{ book.titre }}</td>
                             <td>{{ book.auteur }}</td>
                             <td>
-                                    Editeur Non Défini
+                                {% if book.editeur is not null and book.editeur.__isInitialized__ %}
+                                    {{ book.editeur.nom }}
+                                {% else %}
+                                    Editeur introuvable
+                                {% endif %}
                             </td>
                             <td class="col-md-2">
                                 <a href="/book/{{ book.id }}" class="btn btn-info">View</a>
@@ -36,7 +40,7 @@
                 </tbody>
             </table>
         {% else %}
-            <p class="alert alert-info"><b>There are no books</b></p>
+            <p class="alert alert-info"><b>Aucun livre n'a été renseigné</b></p>
         {% endif %}
     </div>
 
@@ -45,9 +49,17 @@
         document.addEventListener('DOMContentLoaded', function () {
             new DataTable('#books', {
                 searchable: true,
-                sortable: true, // Vous pouvez activer la fonction de tri si nécessaire
-                // Autres options de configuration...
+                sortable: true,
             });
+
+            var input = document.querySelector('.dataTable-input');
+            var selector = document.querySelector('.dataTable-selector');
+            if (input) {
+                input.classList.add('form-control');
+            }
+            if (selector) {
+                selector.classList.add('form-control');
+            }
         });
     </script>
 {% endblock %}
