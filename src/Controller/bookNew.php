@@ -25,7 +25,6 @@ if (Authenticator::is_authenticated()) {
     $logger = new Logger('app'); // Créez une instance de logger
 
     if (Request::METHOD_POST == $request->getMethod()) {
-        // Modification pour utiliser l'ID de l'éditeur
         $editorId = $request->get('editor');
         $editor = $entityManager->find(Editor::class, $editorId);
 

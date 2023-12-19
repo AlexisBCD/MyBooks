@@ -27,7 +27,6 @@ class Book
     #[Assert\NotBlank]
     private \DateTime $anneePublication;
 
-
     #[ORM\ManyToOne(targetEntity: Editor::class)]
     #[ORM\JoinColumn(name: 'editor_id', referencedColumnName: 'id')]
     #[Assert\NotBlank]
@@ -36,6 +35,10 @@ class Book
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
     private string $ISBN;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Assert\NotBlank]
+    private bool $isLoaned = false;
 
     public function getId(): ?int
     {
@@ -100,6 +103,17 @@ class Book
     public function setISBN(string $ISBN): Book
     {
         $this->ISBN = $ISBN;
+        return $this;
+    }
+
+    public function getIsLoaned(): ?bool
+    {
+        return $this->isLoaned;
+    }
+
+    public function setIsLoaned(?bool $isLoaned): Book
+    {
+        $this->isLoaned = $isLoaned;
         return $this;
     }
 }

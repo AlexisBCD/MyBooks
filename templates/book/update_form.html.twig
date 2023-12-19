@@ -1,0 +1,100 @@
+<form method="post">
+    <!-- Boutons pour le statut du livre -->
+    <div class="mb-3 d-flex justify-content-center">
+        <div class="btn-group" role="group" aria-label="Statut du livre">
+            <button type="button" id="loanedButton" class="btn {{ book.isLoaned ? 'btn-warning' : 'btn-outline-warning' }}" data-value="1">Prêté</button>
+            <button type="button" id="availableButton" class="btn {{ book.isLoaned ? 'btn-outline-success' : 'btn-success' }}" data-value="0">Disponible</button>
+        </div>
+    </div>
+
+    <input type="hidden" id="isLoaned" name="isLoaned" value="{{ book.isLoaned ? '1' : '0' }}">
+
+    <!-- Champs pour les détails de l'emprunt, cachés par défaut -->
+    <div id="loanDetails" class="border p-3 my-3" style="display: none; border-radius: 5px;">
+        <div class="mb-3">
+            <label for="borrowerName" class="form-label">Nom de l'emprunteur</label>
+            <input type="text" id="borrowerName" name="borrowerName" placeholder="Entrez le nom de l'emprunteur" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="borrowerEmail" class="form-label">Email de l'emprunteur</label>
+            <input type="email" id="borrowerEmail" name="borrowerEmail" placeholder="Entrez l'email de l'emprunteur" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="loanDate" class="form-label">Date de l'emprunt</label>
+            <input type="date" id="loanDate" name="loanDate" class="form-control" value="{{ 'now'|date('Y-m-d') }}">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Titre</label>
+        <input type="text" id="title" name="title" placeholder="Exemple : Le petit Nicolas" required class="form-control {{ violations.title is not defined ? '' : 'is-invalid' }}" value="{{ book.titre }}">
+        {% for violation in violations.title %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <label for="author" class="form-label">Auteur</label>
+        <input type="text" id="author" name="author" placeholder="Exemple : René Goscinny" required class="form-control {{ violations.author is not defined ? '' : 'is-invalid' }}" value="{{ book.auteur }}">
+        {% for violation in violations.author %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <label for="yearOfPublication" class="form-label">Année de publication</label>
+        <input type="date" id="yearOfPublication" name="yearOfPublication" required class="form-control {{ violations.yearOfPublication is not defined ? '' : 'is-invalid' }}" type="date" value="{{ book.createdAt|date('Y-m-d') }}">
+        {% for violation in violations.yearOfPublication %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <label for="editor" class="form-label">Editeur</label>
+        <select id="editor" name="editor" required class="form-control {{ violations.editor is not defined ? '' : 'is-invalid' }}">
+            <option value="" disabled>Choisissez un éditeur</option>
+            {% for editor in editors %}
+                <option value="{{ editor.id }}" {% if book.editeur.id == editor.id %}selected{% endif %}>{{ editor.nom }}</option>
+            {% endfor %}
+        </select>
+        {% for violation in violations.editor %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <label for="ISBN" class="form-label">ISBN</label>
+        <input type="text" id="ISBN" name="ISBN" placeholder="Exemple : 978-2070364237" required class="form-control {{ violations.ISBN is not defined ? '' : 'is-invalid' }}" value="{{ book.ISBN }}">
+        {% for violation in violations.ISBN %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    const loanedButton = document.getElementById('loanedButton');
+    const availableButton = document.getElementById('availableButton');
+    const isLoanedField = document.getElementById('isLoaned');
+    const loanDetails = document.getElementById('loanDetails');
+
+    loanedButton.addEventListener('click', function() {
+        isLoanedField.value = '1';
+        this.classList.add('btn-warning');
+        this.classList.remove('btn-outline-warning');
+        availableButton.classList.add('btn-outline-success');
+        availableButton.classList.remove('btn-success');
+        loanDetails.style.display = ''; // Affiche les champs des détails de l'emprunt
+    });
+
+    availableButton.addEventListener('click', function() {
+        isLoanedField.value = '0';
+        this.classList.add('btn-success');
+        this.classList.remove('btn-outline-success');
+        loanedButton.classList.add('btn-outline-warning');
+        loanedButton.classList.remove('btn-warning');
+        loanDetails.style.display = 'none'; // Cache les champs des détails de l'emprunt
+    });
+</script>
+

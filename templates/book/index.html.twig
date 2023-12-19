@@ -3,7 +3,6 @@
 {% block title %}Index Book{% endblock %}
 
 {% block body %}
-    <h1>Index Book</h1>
 
     <h2>{{ books|length }} livres enregistrés</h2>
 
@@ -15,6 +14,7 @@
                         <th>Titre</th>
                         <th>Auteur</th>
                         <th>Editeur</th>
+                        <th>État</th>
                         <th class="col-md-2">Actions</th>
                     </tr>
                 </thead>
@@ -24,10 +24,17 @@
                             <td>{{ book.titre }}</td>
                             <td>{{ book.auteur }}</td>
                             <td>
-                                {% if book.editeur is not null and book.editeur.__isInitialized__ %}
+                                {% if book.editeur is not null %}
                                     {{ book.editeur.nom }}
                                 {% else %}
                                     Editeur introuvable
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if book.isLoaned %}
+                                    <span class="badge bg-warning">Prêté</span> 
+                                {% else %}
+                                    <span class="badge bg-success">Disponible</span> 
                                 {% endif %}
                             </td>
                             <td class="col-md-2">
