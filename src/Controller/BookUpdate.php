@@ -1,7 +1,10 @@
 <?php
 
+namespace Logger;
+
 use Monolog\Logger;
 use Security\Authenticator;
+use Logger\WebhookHandler;
 use Logger\DatabaseHandler;
 use Entity\Book;
 use Entity\Editor;
@@ -19,12 +22,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * @var ValidatorInterface $validator
  **/
 
-$bookRepository = $entityManager->getRepository(Book::class);
-$book = $bookRepository->find($id);
 
 $arrayViolations = [];
 
 if (Authenticator::is_authenticated()) {
+    $bookRepository = $entityManager->getRepository(Book::class);
+    $book = $bookRepository->find($id);
     $editorRepository = $entityManager->getRepository(Editor::class);
     $editors = $editorRepository->findAll();
 
@@ -61,8 +64,10 @@ if (Authenticator::is_authenticated()) {
             $entityManager->flush();
 
             $customHandler = new DatabaseHandler($entityManager);
+            $webhookHandler = new WebhookHandler($entityManager);
             $logger = new Logger('app');
             $logger->pushHandler($customHandler);
+            $logger->pushHandler($webhookHandler);
             $logger->info('Livre mis à jour par ' . Authenticator::getUser() . ' : ' . $book->getTitre());
 
             return new RedirectResponse('/book');

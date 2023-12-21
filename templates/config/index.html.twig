@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Config de MyBooks{% endblock %}
+
+{% block body %}
+
+<form method="post">
+    <div class="border p-3 my-3 rounded">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="switchButton">
+            <label class="form-check-label" for="switchButton">Webhook pour les logs</label>
+            <input type="hidden" name="webhookEnabled" id="webhookEnabled">
+        </div>
+
+        <div id="inputContainer" class="pt-3 d-none">
+            <div class="mb-3">
+                <label for="webhookInput" class="form-label">URL du Webhook <span class="fw-bold text-decoration-underline">Discord</span></label>
+                <input type="text" id="webhookInput" name="webhookInput" placeholder="https://discord.com/api/webhooks/...." class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="py-3">
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+    </div>
+</form>
+
+<script>
+const switchButton = document.getElementById('switchButton');
+const webhookEnabledInput = document.getElementById('webhookEnabled');
+const webhookInput = document.getElementById('webhookInput');
+const inputContainer = document.getElementById('inputContainer');
+
+// Configuration initiale
+const webhookEnabledInitialValue = {{ allConfigs['webhookEnabled'].getSettingValue }};
+const webhookInputInitialValue = "{{ allConfigs['webhookInput'].getSettingValue }}";
+
+// Initialiser les éléments avec les valeurs configurées
+window.addEventListener('DOMContentLoaded', (event) => {
+    switchButton.checked = webhookEnabledInitialValue === 1;
+    webhookEnabledInput.value = webhookEnabledInitialValue;
+    webhookInput.value = webhookInputInitialValue;
+
+    // Mise à jour de la visibilité de inputContainer
+    inputContainer.classList.toggle('d-none', webhookEnabledInitialValue === 0);
+});
+
+switchButton.addEventListener('change', function() {
+    webhookEnabledInput.value = this.checked ? "1" : "0";
+    inputContainer.classList.toggle('d-none', !this.checked);
+});
+</script>
+
+{% endblock %}

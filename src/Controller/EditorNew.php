@@ -16,33 +16,35 @@ use Monolog\Logger;
 use Security\Authenticator;
 use Logger\DatabaseHandler;
 
-$editorRepository = $entityManager->getRepository(Editor::class);
 
-$arrayViolations = [];
+if (Authenticator::is_authenticated()) {
+    $editorRepository = $entityManager->getRepository(Editor::class);
+    $arrayViolations = [];
+    if (Request::METHOD_POST == $request->getMethod()) {
+        $editor = (new Editor())
+            ->setAdresse($request->get('adresse'))
+            ->setEmail($request->get('email'))
+            ->setNom($request->get('nom'))
+            ->setTel($request->get('tel'));
 
-if (Request::METHOD_POST == $request->getMethod()) {
-    $editor = (new Editor())
-        ->setAdresse($request->get('adresse'))
-        ->setEmail($request->get('email'))
-        ->setNom($request->get('nom'))
-        ->setTel($request->get('tel'));
+        $violations = $validator->validate($editor);
 
-    $violations = $validator->validate($editor);
+        if ($violations->count() == 0) {
+            $entityManager->persist($editor);
+            $entityManager->flush();
 
-    if ($violations->count() == 0) {
-        $entityManager->persist($editor);
-        $entityManager->flush();
+            $customHandler = new DatabaseHandler($entityManager);
+            $logger = new Logger('app');
+            $logger->pushHandler($customHandler);
+            $logger->info('Nouveau éditeur ajouté par ' . Authenticator::getUser() . ' : ' . $editor->getNom());
 
-        $customHandler = new DatabaseHandler($entityManager);
-        $logger = new Logger('app');
-        $logger->pushHandler($customHandler);
-        $logger->info('Nouveau éditeur ajouté par ' . Authenticator::getUser() . ' : ' . $editor->getNom());
-
-        return new RedirectResponse('/editor');
+            return new RedirectResponse('/editor');
+        }
+        foreach ($violations as $violation) {
+            $arrayViolations[$violation->getPropertyPath()][] = $violation->getMessage();
+        }
     }
-    foreach ($violations as $violation) {
-        $arrayViolations[$violation->getPropertyPath()][] = $violation->getMessage();
-    }
+    return new Response($twig->render('editor/new.html.twig', ['violations' => $arrayViolations]));
+} else {
+    return new RedirectResponse(Authenticator::urlNotLogged());
 }
-
-return new Response($twig->render('editor/new.html.twig', ['violations' => $arrayViolations]));
