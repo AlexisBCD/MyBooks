@@ -8,9 +8,9 @@
  */
 
 
- use Monolog\Logger;
- use Security\Authenticator;
- use Logger\DatabaseHandler;
+use Monolog\Logger;
+use Security\Authenticator;
+use Logger\CentralizedHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +21,7 @@ if (!Authenticator::is_authenticated()) {
 
         $user = Authenticator::authenticate($username, $password, $entityManager);
         if ($user != null) {
-            $customHandler = new DatabaseHandler($entityManager);
+            $customHandler = new CentralizedHandler($entityManager);
             $logger = new Logger('app');
             $logger->pushHandler($customHandler);
             $logger->info(Authenticator::getUser() . " s'est connecté ");

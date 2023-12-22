@@ -3,7 +3,7 @@
 use Entity\Editor;
 use Monolog\Logger;
 use Security\Authenticator;
-use Logger\DatabaseHandler;
+use Logger\CentralizedHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -18,7 +18,7 @@ if (Authenticator::is_authenticated()) {
     $entityManager->remove($editor);
     $entityManager->flush();
 
-    $customHandler = new DatabaseHandler($entityManager);
+    $customHandler = new CentralizedHandler($entityManager);
     $logger = new Logger('app');
     $logger->pushHandler($customHandler);
     $logger->info('Editeur supprimé par ' . Authenticator::getUser() . ' : ' . $editor->getNom());

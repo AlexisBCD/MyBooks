@@ -4,8 +4,7 @@ namespace Logger;
 
 use Monolog\Logger;
 use Security\Authenticator;
-use Logger\WebhookHandler;
-use Logger\DatabaseHandler;
+use Logger\CentralizedHandler;
 use Entity\Book;
 use Entity\Editor;
 use Entity\Loan;
@@ -63,11 +62,9 @@ if (Authenticator::is_authenticated()) {
         if (count($bookViolations) === 0 && count($loanViolations) === 0) {
             $entityManager->flush();
 
-            $customHandler = new DatabaseHandler($entityManager);
-            $webhookHandler = new WebhookHandler($entityManager);
+            $customHandler = new CentralizedHandler($entityManager);
             $logger = new Logger('app');
             $logger->pushHandler($customHandler);
-            $logger->pushHandler($webhookHandler);
             $logger->info('Livre mis à jour par ' . Authenticator::getUser() . ' : ' . $book->getTitre());
 
             return new RedirectResponse('/book');

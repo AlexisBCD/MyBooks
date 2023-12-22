@@ -35,8 +35,8 @@ class WebhookHandler extends AbstractProcessingHandler
             if ($webhookUrl) {
                 // Préparer le message pour Discord
                 $postData = json_encode([
-                    "username" => "MonLogger", // Nom d'utilisateur personnalisé pour le webhook
-                    "content" => $record['message'], // Message du log
+                    "username" => "MyBooks Logger", // Nom d'utilisateur personnalisé pour le webhook
+                    //"content" => $record['message'], // Message du log
                     "embeds" => [
                         [
                             "title" => "Détails du Log", // Titre de l'embed

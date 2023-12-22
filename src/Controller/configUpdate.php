@@ -8,7 +8,7 @@
  */
 
 use Monolog\Logger;
-use Logger\DatabaseHandler;
+use Logger\CentralizedHandler;
 use Security\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +57,8 @@ if (Authenticator::is_authenticated()) {
         }
 
         $entityManager->flush();
-        $customHandler = new DatabaseHandler($entityManager);
+
+        $customHandler = new CentralizedHandler($entityManager);
         $logger = new Logger('app');
         $logger->pushHandler($customHandler);
         $logger->info('Config mise à jour par ' . Authenticator::getUser());

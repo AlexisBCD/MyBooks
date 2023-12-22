@@ -9,12 +9,12 @@
 
 
 use Security\Authenticator;
-use Logger\DatabaseHandler;
+use Logger\CentralizedHandler;
 use Monolog\Logger;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 if (Authenticator::is_authenticated()) {
-    $customHandler = new DatabaseHandler($entityManager);
+    $customHandler = new CentralizedHandler($entityManager);
     $logger = new Logger('app');
     $logger->pushHandler($customHandler);
     $logger->info(Authenticator::getUser() . " s'est déconnecté ");

@@ -1,0 +1,35 @@
+<form method="post">
+    <div class="mb-3">
+        <label for="nom" class="form-label">Nom</label>
+        <input type="text" id="nom" name="nom" placeholder="Hachette" required class="form-control {{ violations.nom is not defined ? '' : 'is-invalid' }}" value="{{ editor.nom }}">
+        {% for violation in violations.email %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <label for="adresse" class="form-label">Adresse</label>
+        <input type="text" id="adresse" name="adresse" placeholder="156 Rue de la paix 59300 Valenciennes" required class="form-control {{ violations.adresse is not defined ? '' : 'is-invalid' }}" value="{{ editor.adresse }}">
+        {% for violation in violations.adresse %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" id="email" name="email" placeholder="iLoveMyBooks@meslivres.com" required class="form-control {{ violations.email is not defined ? '' : 'is-invalid' }}" value="{{ editor.email }}">
+        {% for violation in violations.email %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <label for="tel" class="form-label">Téléphone</label>
+        <input type="text" id="tel" name="tel" placeholder="0663456787" required class="form-control {{ violations.tel is not defined ? '' : 'is-invalid' }}" value="{{ editor.tel }}">
+        {% for violation in violations.tel %}
+            <div class="invalid-feedback">{{ violation }}</div>
+        {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+</form>

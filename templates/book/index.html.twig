@@ -57,6 +57,12 @@
             new DataTable('#books', {
                 searchable: true,
                 sortable: true,
+                labels: {
+                    placeholder: 'Rechercher...', // Placeholder de recherche
+                    perPage: '{select} entrées par page', // Texte pour le nombre d'entrées par page
+                    noRows: 'Aucune entrée trouvée', // Texte lorsqu'aucune entrée n'est trouvée
+                    info: 'Affichage des entrées {start} à {end} sur {rows} entrées' // Information sur la pagination
+                }
             });
 
             var input = document.querySelector('.dataTable-input');

@@ -14,15 +14,18 @@
         <div class="mb-3">
             <label for="borrowerName" class="form-label">Nom de l'emprunteur</label>
             <input type="text" id="borrowerName" name="borrowerName" placeholder="Entrez le nom de l'emprunteur" class="form-control">
+            <div id="borrowerNameError" class="invalid-feedback" style="display: none;">Le nom de l'emprunteur ne peut pas être vide.</div>
         </div>
-        <div class="mb-3">
-            <label for="borrowerEmail" class="form-label">Email de l'emprunteur</label>
-            <input type="email" id="borrowerEmail" name="borrowerEmail" placeholder="Entrez l'email de l'emprunteur" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="loanDate" class="form-label">Date de l'emprunt</label>
-            <input type="date" id="loanDate" name="loanDate" class="form-control" value="{{ 'now'|date('Y-m-d') }}">
-        </div>
+    <div class="mb-3">
+        <label for="borrowerEmail" class="form-label">Email de l'emprunteur</label>
+        <input type="email" id="borrowerEmail" name="borrowerEmail" placeholder="Entrez l'email de l'emprunteur" class="form-control">
+        <div id="borrowerEmailError" class="invalid-feedback" style="display: none;">L'email de l'emprunteur ne peut pas être vide.</div>
+    </div>
+    <div class="mb-3">
+        <label for="loanDate" class="form-label">Date de l'emprunt</label>
+        <input type="date" id="loanDate" name="loanDate" class="form-control" value="{{ 'now'|date('Y-m-d') }}">
+        <div id="loanDateError" class="invalid-feedback" style="display: none;">La date de l'emprunt ne peut pas être vide.</div>
+    </div>
     </div>
 
     <div class="mb-3">
@@ -78,6 +81,44 @@
     const availableButton = document.getElementById('availableButton');
     const isLoanedField = document.getElementById('isLoaned');
     const loanDetails = document.getElementById('loanDetails');
+    const borrowerName = document.getElementById('borrowerName');
+    const borrowerEmail = document.getElementById('borrowerEmail'); // Ajoutez cette ligne
+    const borrowerNameError = document.getElementById('borrowerNameError'); // Ajoutez cette ligne
+    const borrowerEmailError = document.getElementById('borrowerEmailError'); // Ajoutez cette ligne
+    const loanDate = document.getElementById('loanDate');
+    const loanDateError = document.getElementById('loanDateError');
+    const submitButton = document.querySelector('button[type="submit"]');
+
+    function validateLoanDetails() {
+        let isFormValid = true;
+
+        // Validation du nom de l'emprunteur
+        if (isLoanedField.value === '1' && borrowerName.value.trim() === '') {
+            borrowerNameError.style.display = 'block';
+            isFormValid = false;
+        } else {
+            borrowerNameError.style.display = 'none';
+        }
+
+        // Validation de l'email de l'emprunteur
+        if (isLoanedField.value === '1' && borrowerEmail.value.trim() === '') {
+            borrowerEmailError.style.display = 'block';
+            isFormValid = false;
+        } else {
+            borrowerEmailError.style.display = 'none';
+        }
+
+        // Validation de la date de l'emprunt
+        if (isLoanedField.value === '1' && loanDate.value.trim() === '') {
+            loanDateError.style.display = 'block';
+            isFormValid = false;
+        } else {
+            loanDateError.style.display = 'none';
+        }
+
+        // Désactivation du bouton de soumission si le formulaire n'est pas valide
+        submitButton.disabled = !isFormValid;
+    }
 
     loanedButton.addEventListener('click', function() {
         isLoanedField.value = '1';
@@ -86,6 +127,7 @@
         availableButton.classList.add('btn-outline-success');
         availableButton.classList.remove('btn-success');
         loanDetails.style.display = ''; // Affiche les champs des détails de l'emprunt
+        validateLoanDetails(); // Valider les champs de l'emprunteur
     });
 
     availableButton.addEventListener('click', function() {
@@ -95,6 +137,16 @@
         loanedButton.classList.add('btn-outline-warning');
         loanedButton.classList.remove('btn-warning');
         loanDetails.style.display = 'none'; // Cache les champs des détails de l'emprunt
+        submitButton.disabled = false; // Réactive le bouton de soumission
     });
+
+    borrowerName.addEventListener('input', validateLoanDetails);
+    borrowerEmail.addEventListener('input', validateLoanDetails);
+    loanDate.addEventListener('input', validateLoanDetails);
+
+    // Valider immédiatement lors du chargement de la page
+    validateLoanDetails();
+    // Afficher ou cacher les détails de l'emprunt en fonction de l'état initial
+    loanDetails.style.display = isLoanedField.value === '1' ? '' : 'none';
 </script>
 

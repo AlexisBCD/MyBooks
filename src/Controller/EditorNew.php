@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Monolog\Logger;
 use Security\Authenticator;
-use Logger\DatabaseHandler;
+use Logger\CentralizedHandler;
 
 
 if (Authenticator::is_authenticated()) {
@@ -33,7 +33,7 @@ if (Authenticator::is_authenticated()) {
             $entityManager->persist($editor);
             $entityManager->flush();
 
-            $customHandler = new DatabaseHandler($entityManager);
+            $customHandler = new CentralizedHandler($entityManager);
             $logger = new Logger('app');
             $logger->pushHandler($customHandler);
             $logger->info('Nouveau éditeur ajouté par ' . Authenticator::getUser() . ' : ' . $editor->getNom());

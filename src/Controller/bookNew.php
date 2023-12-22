@@ -11,7 +11,7 @@
 use Security\Authenticator;
 use Entity\Book;
 use Entity\Editor;
-use Logger\DatabaseHandler;
+use Logger\CentralizedHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,6 @@ if (Authenticator::is_authenticated()) {
     $editors = $editorRepository->findAll();
 
     $arrayViolations = [];
-    $logger = new Logger('app'); // Créez une instance de logger
 
     if (Request::METHOD_POST == $request->getMethod()) {
         $editorId = $request->get('editor');
@@ -41,7 +40,8 @@ if (Authenticator::is_authenticated()) {
             $entityManager->persist($book);
             $entityManager->flush();
 
-            $customHandler = new DatabaseHandler($entityManager);
+            $customHandler = new CentralizedHandler($entityManager);
+            $logger = new Logger('app');
             $logger->pushHandler($customHandler);
             $logger->info('Nouveau livre ajouté par ' . Authenticator::getUser() . ' : ' . $book->getTitre());
 

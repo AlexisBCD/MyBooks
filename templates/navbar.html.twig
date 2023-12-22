@@ -1,74 +1,39 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Home</a>
-
-        <!-- Add the button for the responsive menu -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="/">MyBooks</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLivres" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLivres" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Livres
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownLivres">
                         <a class="dropdown-item" href="/book">Visualiser notre collection</a>
                         <a class="dropdown-item" href="/book/new">Nouveau Livre</a>
-                        <!-- Add more dropdown menu items if needed -->
                     </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/editor" id="navbarDropdownEditor" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </div>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEditor" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Les éditeurs
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownEditor">
                         <a class="dropdown-item" href="/editor">Visualiser nos éditeurs</a>
                         <a class="dropdown-item" href="/editor/new">Enregistrer une maison d'édition</a>
-                        <!-- Add more dropdown menu items if needed -->
                     </div>
-                </li>
+                </div>
                 {% if session.userId is defined %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logs">Historique</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/config">Configuration</a>
-                    </li>
+                    <a class="nav-item nav-link" href="/logs">Historique</a>
+                    <a class="nav-item nav-link" href="/config">Configuration</a>
                 {% endif %}
-            </ul>
-            <ul class="navbar-nav ml-auto">
+            </div>
+            <div class="navbar-nav ms-auto">
                 {% if session.userId is defined %}
-                    <li class="nav-item ml-auto">
-                        <a class="nav-link" href="/logout">Déconnexion</a>
-                    </li>
+                    <a class="nav-item nav-link" href="/logout">Déconnexion</a>
                 {% endif %}
-            </ul>
+            </div>
         </div>
     </div>
 </nav>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Custom script for hover-based dropdown
-    $(document).ready(function() {
-        // Enable Bootstrap tooltip for Livres link
-        $('[data-toggle="tooltip"]').tooltip();
-
-        // Show the dropdown menu on hover
-        $('.nav-item.dropdown').hover(
-            function() {
-                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
-            },
-            function() {
-                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
-            }
-        );
-    });
-</script>

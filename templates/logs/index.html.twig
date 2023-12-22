@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{ log.id }}</td>
                         <td>{{ log.message }}</td>
-                        <td>{{ log.createdAt|date('d-m-Y H:i:s') }}</td>
+                        <td>{{ log.getCreationDate()|date('d-m-Y H:i:s') }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -36,15 +36,27 @@
             new DataTable('#logs', {
                 searchable: true,
                 sortable: true,
+                labels: {
+                    placeholder: 'Rechercher...', // Placeholder de recherche
+                    perPage: '{select} entrées par page', // Texte pour le nombre d'entrées par page
+                    noRows: 'Aucune entrée trouvée', // Texte lorsqu'aucune entrée n'est trouvée
+                    info: 'Affichage des entrées {start} à {end} sur {rows} entrées' // Information sur la pagination
+                }
             });
 
             var input = document.querySelector('.dataTable-input');
             var selector = document.querySelector('.dataTable-selector');
+            var pagination = document.querySelector('.dataTable-pagination');
+
             if (input) {
                 input.classList.add('form-control');
             }
             if (selector) {
                 selector.classList.add('form-control');
+            }
+            if (pagination) {
+                pagination.classList.add('d-flex');
+                pagination.classList.add('justify-content-center');
             }
         });
     </script>
