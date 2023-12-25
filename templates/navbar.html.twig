@@ -32,6 +32,8 @@
             <div class="navbar-nav ms-auto">
                 {% if session.userId is defined %}
                     <a class="nav-item nav-link" href="/logout">Déconnexion</a>
+                {% else %}
+                    <a class="nav-item nav-link" href="/login">Connexion</a>
                 {% endif %}
             </div>
         </div>

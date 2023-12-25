@@ -32,8 +32,8 @@ const webhookInput = document.getElementById('webhookInput');
 const inputContainer = document.getElementById('inputContainer');
 
 // Configuration initiale
-const webhookEnabledInitialValue = {{ allConfigs['webhookEnabled'].getSettingValue }};
-const webhookInputInitialValue = "{{ allConfigs['webhookInput'].getSettingValue }}";
+const webhookEnabledInitialValue = {{ allConfigs['webhookEnabled'].getSettingValue|default(0) }};
+const webhookInputInitialValue = "{{ allConfigs['webhookInput'].getSettingValue|default('') }}";
 
 // Initialiser les éléments avec les valeurs configurées
 window.addEventListener('DOMContentLoaded', (event) => {

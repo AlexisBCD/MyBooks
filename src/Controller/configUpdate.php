@@ -62,6 +62,8 @@ if (Authenticator::is_authenticated()) {
         $logger = new Logger('app');
         $logger->pushHandler($customHandler);
         $logger->info('Config mise à jour par ' . Authenticator::getUser());
+
+        return new \Symfony\Component\HttpFoundation\RedirectResponse('/config');
     }
 
     return new Response($twig->render('config/index.html.twig', [
