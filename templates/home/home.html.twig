@@ -1,7 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}MyBooks - Votre Bibliothèque Personnelle{% endblock %}
 
 {% block body %}
-    <h1>Welcome to my super website</h1>
+    <body class="text-center">
+
+        <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+
+            <main role="main" class="inner cover">
+                <h1 class="cover-heading">Bienvenue sur MyBooks.</h1>
+                <p class="lead">MyBooks est une application web innovante conçue pour gérer votre collection de livres de manière intuitive. Ajoutez, gérez et consultez vos livres et éditeurs favoris en toute simplicité.</p>
+                <p class="lead">
+                    <a href="http://bit.ly/47goQBl" class="btn btn-lg btn-secondary">Découvrir plus</a>
+                </p>
+            </main>
+
+        </div>
+
+    </body>
 {% endblock %}
