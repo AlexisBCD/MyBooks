@@ -53,7 +53,7 @@ php -S 127.0.0.1:8000 -t public
 - Accéder à l'application via un navigateur web.
 
 5. **Connexion à l'application :**
-Après avoir lancé l'application, il est important de se connecter pour accéder à toutes ses fonctionnalités. MyBooks dispose d'un système d’authentification. Pour les besoins des tests et de la démonstration, un compte utilisateur a été pré-configuré avec les identifiants suivants :
+- Après avoir lancé l'application, il est important de se connecter pour accéder à toutes ses fonctionnalités. MyBooks dispose d'un système d’authentification. Pour les besoins des tests et de la démonstration, un compte utilisateur a été pré-configuré avec les identifiants suivants :
 
 ```
 Nom d'utilisateur : test
